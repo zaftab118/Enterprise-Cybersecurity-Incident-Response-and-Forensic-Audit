@@ -9,7 +9,7 @@ Enterprise incident response, root cause investigation, and systems hardening on
 
 > **Target Infrastructure:** `192.168.128.2` (Legacy Production Ubuntu Server)  
 > **Lead Security Analyst:** Zohaib Aftab  
-> **Documentation:** [Full Technical Incident Report (PDF)](./Enterprise%20Security%20Audit%20Report.pdf)
+> **Documentation:** [Full Enterprise Security Audit Report (PDF)](./Enterprise%20Security%20Audit%20Report.pdf)
 
 ---
 
@@ -33,7 +33,7 @@ Triage confirmed an active, unauthenticated root backdoor listening on **TCP Por
 | Timestamp (EST) | IR Phase | Technical Action | Impact |
 | :--- | :--- | :--- | :--- |
 | **2026-11-04 13:07** | **1. Environment Isolation** | Configured isolated Host-Only hypervisor networking (UTM); verified layer-3 reachability. | Zero external packet leakage; target online at `192.168.128.2` (0% packet loss). |
-| **2026-11-04 13:22** | **1. Service Discovery** | Full TCP SYN service scan (`nmap -sS -sV -O -v`). | Identified 20+ listening services including Telnet (23), Bindshell (1524), and UnrealIRCd (6667). |
+| **2026-11-04 13:22** | **1. Service Discovery** | Full TCP SYN service scan (`nmap -sS -sV -oN`). | Identified 20+ listening services including Telnet (23), Bindshell (1524), and UnrealIRCd (6667). |
 | **2026-11-04 14:37** | **2. Vulnerability Audit** | Automated NSE vulnerability assessment (`nmap --script vuln`). | Flagged SQL Injection vectors and obsolete daemon exposures. |
 | **2026-11-05 10:33** | **2. Threat Profiling** | Correlated service banners to MITRE CWE taxonomies with AI CTI profiling. | Classified Port 1524 listener as **CVSS 10.0 (Critical)** under **CWE-78** and **CWE-284**. |
 | **2026-11-06 10:17** | **3. Evidence Preservation** | Dumped active sockets and preserved volatile log directories to `/tmp/evidence/`. | Maintained forensic chain of custody for `auth_logs`, `daemon_logs`, `apache2_logs`, and `samba_logs`. |
